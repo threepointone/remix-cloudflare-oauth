@@ -1,0 +1,39 @@
+{
+  "name": "remixflare",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "dotenv -e .env npm run _start",
+    "_start": "remix dev -c \"wrangler dev --local-protocol=https --port 3141 --define SESSION_SECRET:$SESSION_SECRET --define OAUTH_CLIENT_ID:$OAUTH_CLIENT_ID --define OAUTH_CLIENT_SECRET:$OAUTH_CLIENT_SECRET --define DEV_HOST:$DEV_HOST --define PROD_HOST:$PROD_HOST\"",
+    "build": "remix build",
+    "deploy": "dotenv -e .env npm run _deploy",
+    "_deploy": "remix build && wrangler deploy --define SESSION_SECRET:$SESSION_SECRET --define OAUTH_CLIENT_ID:$OAUTH_CLIENT_ID --define OAUTH_CLIENT_SECRET:$OAUTH_CLIENT_SECRET\" --define DEV_HOST:$DEV_HOST --define PROD_HOST:$PROD_HOST\"",
+    "check": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240821.1",
+    "@remix-run/dev": "^2.11.2",
+    "@types/react": "^18.3.4",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.5.4",
+    "wrangler": "^3.72.3"
+  },
+  "dependencies": {
+    "@remix-run/cloudflare": "^2.11.2",
+    "@remix-run/css-bundle": "^2.11.2",
+    "@remix-run/react": "^2.11.2",
+    "@remix-run/server-runtime": "^2.11.2",
+    "cloudflare": "^3.5.0",
+    "dotenv-cli": "^7.4.2",
+    "isbot": "^5.1.17",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remix-auth": "^3.7.0",
+    "remix-auth-oauth2": "^2.3.0"
+  }
+}
