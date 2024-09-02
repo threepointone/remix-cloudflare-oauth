@@ -21,37 +21,6 @@ export type User = {
   }[];
 };
 
-declare global {
-  const OAUTH_CLIENT_ID: string | undefined;
-  const OAUTH_CLIENT_SECRET: string | undefined;
-  const DEV_HOST: string | undefined;
-  const PROD_HOST: string | undefined;
-}
-
-if (!OAUTH_CLIENT_ID) {
-  throw new Error(
-    "global OAUTH_CLIENT_ID is not set, use --define OAUTH_CLIENT_ID=<id> or define.OAUTH_CLIENT_ID=<id> in wrangler.toml"
-  );
-}
-
-if (!OAUTH_CLIENT_SECRET) {
-  throw new Error(
-    "global OAUTH_CLIENT_SECRET is not set, use --define OAUTH_CLIENT_SECRET=<secret> or define.OAUTH_CLIENT_SECRET=<secret> in wrangler.toml"
-  );
-}
-
-if (!DEV_HOST) {
-  throw new Error(
-    "global DEV_HOST is not set, use --define DEV_HOST=<host> or define.DEV_HOST=<host> in wrangler.toml"
-  );
-}
-
-if (!PROD_HOST) {
-  throw new Error(
-    "global PROD_HOST is not set, use --define PROD_HOST=<host> or define.PROD_HOST=<host> in wrangler.toml"
-  );
-}
-
 /**
  * The scopes used by your application. It'll probably be a subset of these.
  */
@@ -90,13 +59,15 @@ const strategy = new OAuth2Strategy<
   { id_token: string }
 >(
   {
-    clientId: OAUTH_CLIENT_ID,
-    clientSecret: OAUTH_CLIENT_SECRET,
+    clientId: process.env.OAUTH_CLIENT_ID,
+    clientSecret: process.env.OAUTH_CLIENT_SECRET,
 
     authorizationEndpoint: "https://dash.cloudflare.com/oauth2/auth",
     tokenEndpoint: "https://dash.cloudflare.com/oauth2/token",
     redirectURI: `${
-      process.env.NODE_ENV === "development" ? DEV_HOST : PROD_HOST
+      process.env.NODE_ENV === "development"
+        ? process.env.DEV_HOST
+        : process.env.PROD_HOST
     }/oauth/cf/callback`,
 
     tokenRevocationEndpoint: "https://dash.cloudflare.com/oauth2/revoke", // optional
