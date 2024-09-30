@@ -1,4 +1,4 @@
-## remixflare
+## remix-cloudflare-oauth
 
 A remix template setup with Cloudflare OAuth.
 
