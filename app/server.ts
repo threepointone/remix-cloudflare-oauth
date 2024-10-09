@@ -14,6 +14,11 @@ declare global {
   var process: {
     env: {
       NODE_ENV: "development" | "production" | "test";
+      SESSION_SECRET: string;
+      OAUTH_CLIENT_ID: string;
+      OAUTH_CLIENT_SECRET: string;
+      DEV_HOST: string;
+      PROD_HOST: string;
     };
   };
 }
